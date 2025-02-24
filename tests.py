@@ -99,6 +99,17 @@ class TestBooksCollector:
         collector.add_book_in_favorites('Гарри Поттер')
         assert collector.get_list_of_favorites_books() == ['Сновидения Эхо','1984','Гарри Поттер']
 
+    @pytest.mark.parametrize(
+        "book_title",
+        [
+            "",  # Пустое название
+            "A" * 101  # Слишком длинное название (допустим, лимит 100 символов)
+        ]
+    )
+    def test_add_new_book_invalid_title(self, book_title):
+        collector = BooksCollector()  # Создаем новый экземпляр BooksCollector
 
+        collector.add_new_book(book_title)
+        assert book_title not in collector.get_books_genre()
 
 
